@@ -71,21 +71,14 @@ local function AppendTextLink(a, callback)
 
 	if #result == 0 then return false end
 	table.sort(result, SORT1)
-	local _l, _r
 
-	for k, tbl in next, result do
-		local l, r = tbl[1], tbl[2]
-
-		if not _l then
-			_l, _r = tbl[1], tbl[2]
-			continue
+	local i = 2
+	while i <= #result do
+		if result[i][1] <= result[i - 1][2] then
+			table.remove(result, i)
+		else
+			i = i + 1
 		end
-
-		if l < _r then
-			table.remove(result, k)
-		end
-
-		_l, _r = tbl[1], tbl[2]
 	end
 
 	local function TEX(str)
